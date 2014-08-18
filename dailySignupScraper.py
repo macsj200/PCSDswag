@@ -1,8 +1,16 @@
 import libStuff
 
+class Address:
+	def __init__(self, address1, address2, city, state, zip):
+		self.address1 = address1
+		self.address2 = address2
+		self.city = city
+		self.state = state
+		self.zip = zip
+
 class Signup:
 	def __init__(self, registrant, classId, date, time, paid, seatCost, notes, className, seats, groupId, agentName, agentCompany):
-		self.registrant
+		self.registrant = registrant
 		self.classId = classId
 		self.date = date
 		self.time = time
@@ -40,61 +48,107 @@ def scrape(br):
 		for cell in cells:
 			if cellNumber == 0:
 				try:
-					cardNumber = cell.contents[0]
-				except IndexError:
-					cardNumber = None
-			elif cellNumber == 1:
-				try:
 					firstName = cell.contents[0]
 				except IndexError:
 					firstName = None
-			elif cellNumber == 2:
+			elif cellNumber == 1:
 				try:
 					lastName = cell.contents[0]
 				except IndexError:
 					lastName = None
+			elif cellNumber == 2:
+				try:
+					address1 = cell.contents[0]
+				except IndexError:
+					address1 = None
 			elif cellNumber == 3:
+				try:
+					address2 = cell.contents[0]
+				except IndexError:
+					address2 = None
+			elif cellNumber == 4:
+				try:
+					city = cell.contents[0]
+				except IndexError:
+					city = None
+			elif cellNumber == 5:
+				try:
+					state = cell.contents[0]
+				except IndexError:
+					state = None
+			elif cellNumber == 6:
+				try:
+					zip = cell.contents[0]
+				except IndexError:
+					zip = None
+			elif cellNumber == 7:
+				try:
+					phone = cell.contents[0]
+				except IndexError:
+					phone = None
+			elif cellNumber == 8:
 				try:
 					email = cell.contents[0]
 				except IndexError:
 					email = None
-			elif cellNumber == 4:
+			elif cellNumber == 9:
 				try:
-					balance = cell.contents[0]
+					classId = cell.contents[0]
 				except IndexError:
-					balance = None
-			elif cellNumber == 5:
+					classId = None
+			elif cellNumber == 10:
 				try:
-					pin = cell.contents[0]
+					date = cell.contents[0]
 				except IndexError:
-					pin = None
-			elif cellNumber == 6:
+					date = None
+			elif cellNumber == 11:
 				try:
-					datePurchased = cell.contents[0]
+					time = cell.contents[0]
 				except IndexError:
-					datePurchased = None
-			elif cellNumber == 7:
+					time = None
+			elif cellNumber == 12:
 				try:
-					charitable = cell.contents[0]
+					paid = cell.contents[0]
 				except IndexError:
-					charitable = None
-			elif cellNumber == 8:
+					paid = None
+			elif cellNumber == 13:
+				try:
+					seatCost = cell.contents[0]
+				except IndexError:
+					seatCost = None
+			elif cellNumber == 14:
 				try:
 					notes = cell.contents[0]
 				except IndexError:
 					notes = None
-			elif cellNumber == 9:
+			elif cellNumber == 15:
 				try:
-					amount = cell.contents[0]
+					className = cell.contents[0]
 				except IndexError:
-					amount = None
-			elif cellNumber == 10:
+					className = None
+			elif cellNumber == 16:
 				try:
-					price = cell.contents[0]
+					seats = cell.contents[0]
 				except IndexError:
-					price = None
+					seats = None
+			elif cellNumber == 17:
+				try:
+					groupId = cell.contents[0]
+				except IndexError:
+					groupId = None
+			elif cellNumber == 18:
+				try:
+					agentName = cell.contents[0]
+				except IndexError:
+					agentName = None
+			elif cellNumber == 19:
+				try:
+					agentCompany = cell.contents[0]
+				except IndexError:
+					agentCompany = None
 			cellNumber = cellNumber + 1
-		
+
+		address = Address(address1, address2, city, state, zip)
 		registrant = Registrant(firstName, lastName, address, phone, email)
 		signup = Signup(registrant, classId, date, time, paid, seatCost, notes, className, seats, groupId, agentName, agentCompany)
 		signups.append(signup)
