@@ -1,8 +1,4 @@
-import requests
-import json
-from bs4 import BeautifulSoup
-from subprocess import call
-from mechanize import Browser
+import libStuff
 
 
 class CardHolder:
@@ -23,19 +19,10 @@ class GiftCard:
 		self.amount = amount
 		self.price = price
 
-def login(username, password):
-	br = Browser();
-	br = Browser()
-	br.set_handle_robots(False)
-	br.addheaders = [('User-agent', 'Firefox')]
-	br.open('http://thepaintmixer.com/admin/?stat=1&nm=' + username +  '&pd=' + password)
-	return br
-
-def export(exportFile):
+def scrape(br):
 	cards = []
-
-	html = login('Americansaddler12', 'paintmixer12').open('http://thepaintmixer.com/admin/viewgiftcards.php').read()
-	soup = BeautifulSoup(html)
+	
+	soup = libStuff.getSoup(br, 'http://thepaintmixer.com/admin/viewgiftcards.php')
 
 	table = soup.find('table', 'borderTable')
 	rows = table.find_all('tr')
@@ -107,7 +94,4 @@ def export(exportFile):
 		cardHolder = CardHolder(firstName, lastName, email)
 		giftCard = GiftCard(cardNumber, cardHolder, balance, pin, datePurchased, charitable, notes, amount, price)
 		cards.append(giftCard)
-
-	jsonified = json.dumps(cards, default=lambda o: o.__dict__)
-	
-	exportFile.write(jsonified)
+	return cards
