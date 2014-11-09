@@ -9,6 +9,13 @@ def login(username, password):
 	br.open('http://thepaintmixer.com/admin/?stat=1&nm=' + username +  '&pd=' + password)
 	return br
 
+def getPage(url):
+	br = Browser()
+	br.set_handle_robots(False)
+	br.addheaders = [('User-agent', 'Firefox')]
+	br.open(url)
+	return br
+
 def getSoup(br, url):
 	html = br.open(url).read()
 	soup = BeautifulSoup(html)
